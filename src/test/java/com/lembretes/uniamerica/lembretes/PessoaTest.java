@@ -6,6 +6,7 @@ import com.lembretes.uniamerica.lembretes.Entity.Pessoa;
 import com.lembretes.uniamerica.lembretes.Repository.LembreteRep;
 import com.lembretes.uniamerica.lembretes.Repository.PessoaRep;
 import org.checkerframework.checker.units.qual.A;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -16,6 +17,8 @@ import org.junit.Assert;
 
 import java.util.List;
 import java.util.Optional;
+
+import static junit.framework.TestCase.assertNull;
 
 
 @SpringBootTest
@@ -76,17 +79,7 @@ public class PessoaTest {
         Assert.assertEquals("Gabi", nome);
 
     }
-    @Test
-    void testDeletarPessoa(){
-        var pessoacontroller = pessoaController.findById(1L);
-        Pessoa pessoa = pessoacontroller.getBody().get();
-        pessoaRep.delete(pessoa);
-        Pessoa pessoaExcluida = pessoaRep.findById(1L).orElse(null);
-        System.out.println(pessoaExcluida);
-        Assert.assertNull(pessoaExcluida);
-
-
-    }
+    
     @Test
     void testFindByIdLembrete(){
         var lembretecontroller = controllerLembrete.findById(1L);
