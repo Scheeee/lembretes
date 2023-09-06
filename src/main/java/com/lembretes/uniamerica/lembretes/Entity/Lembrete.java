@@ -2,13 +2,14 @@ package com.lembretes.uniamerica.lembretes.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @Entity
-
+@Data
+@NoArgsConstructor
+//@RequiredArgsConstructor
 public class Lembrete {
     @Id
     @Getter
@@ -30,4 +31,9 @@ public class Lembrete {
     private Pessoa pessoa;
 
 
+    public Lembrete(Long id, String lembrete, Pessoa pessoa) {
+        this.id = id;
+        this.lembrete = lembrete;
+        this.pessoa = pessoa;
+    }
 }

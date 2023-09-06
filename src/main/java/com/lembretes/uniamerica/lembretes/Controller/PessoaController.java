@@ -1,6 +1,5 @@
 package com.lembretes.uniamerica.lembretes.Controller;
 
-import com.lembretes.uniamerica.lembretes.Entity.Lembrete;
 import com.lembretes.uniamerica.lembretes.Entity.Pessoa;
 import com.lembretes.uniamerica.lembretes.Repository.PessoaRep;
 import com.lembretes.uniamerica.lembretes.Service.PessoaService;
@@ -9,6 +8,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/api/pessoa")
@@ -21,7 +22,7 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping("/{nome}")
-    public ResponseEntity<?> FindByNome(@PathVariable("nome") String nome) {
+    public ResponseEntity<Pessoa> FindByNome(@PathVariable("nome") String nome) {
         try {
             Pessoa pessoa = pessoaRep.getByNome(nome);
             if (pessoa != null) {
@@ -30,8 +31,13 @@ public class PessoaController {
                 return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+            return (ResponseEntity<Pessoa>) ResponseEntity.internalServerError();
         }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Pessoa>> findById(@PathVariable("id") Long id) {
+         Optional<Pessoa> pessoa = this.pessoaRep.findById(id);
+            return ResponseEntity.ok(pessoa);
     }
     @GetMapping("/lista")
     public ResponseEntity <?> getAll(){

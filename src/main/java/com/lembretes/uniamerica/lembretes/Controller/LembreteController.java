@@ -1,6 +1,7 @@
 package com.lembretes.uniamerica.lembretes.Controller;
 
 import com.lembretes.uniamerica.lembretes.Entity.Lembrete;
+import com.lembretes.uniamerica.lembretes.Entity.Pessoa;
 import com.lembretes.uniamerica.lembretes.Repository.LembreteRep;
 import com.lembretes.uniamerica.lembretes.Repository.PessoaRep;
 import com.lembretes.uniamerica.lembretes.Service.LembreteService;
@@ -19,7 +20,12 @@ public class LembreteController {
     @Autowired
     private LembreteService lembreteService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Lembrete> findById(@PathVariable("id") Long id) {
+        final Lembrete lembrete = this.lembreteRep.findById(id).orElse(null);
 
+        return ResponseEntity.ok(lembrete);
+    }
     @PostMapping
     public ResponseEntity<?> inserir(@RequestBody final Lembrete lembrete){
         try {
